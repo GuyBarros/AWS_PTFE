@@ -4,3 +4,8 @@
 
 # Module directory
 .terraform/
+terraform.tfstate*
+
+
+# tfvars file
+terraform.tfvars
