@@ -42,6 +42,7 @@ variable "tag_ttl" {
 
 variable "key_name" {
   description = "please enter  the AWS key pair to use for resources."
+  default     = "ptfe default ssh key"
 }
 
 variable "public_key_path" {
@@ -50,4 +51,9 @@ variable "public_key_path" {
 
 variable "private_key_path" {
   description = "please enter your private ssh key path"
+}
+
+variable "volume_size" {
+  description = "the Value you want for your ec2 volume"
+  default     = 100
 }

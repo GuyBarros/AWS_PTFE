@@ -7,21 +7,43 @@ resource "aws_instance" "ptfe" {
   instance_type = "${var.instance_type}"
   key_name      = "${aws_key_pair.ptfe_key_pair.key_name}"
 
-  # user_data                   = "${file("ptfe_bootstrap.sh")}"
+  ebs_block_device {
+    device_name = "/dev/sda1"
+    volume_type = "gp2"
+    volume_size = "${var.volume_size}"
+  }
 
   vpc_security_group_ids = [
     "${aws_security_group.ptfe_sg.id}",
   ]
+
   tags {
     Name  = "${var.tag_name}"
     owner = "${var.tag_owner}"
     TTL   = "${var.tag_ttl}"
   }
+
   connection {
-    user        = "ec2_user"
-    private_key = "${file(var.key_path)}"
+    user        = "ec2-user"
+    private_key = "${file(var.private_key_path)}"
     agent       = false
   }
+
+  /**
+  provisioner "remote-exec" {
+    inline = [
+      "sudo pwd",
+      "sudo ls -lia",
+      "sleep 10",
+      "curl https://install.terraform.io/ptfe/stable | sudo bash",
+      "sleep 10",
+      "n",
+      "sleep 90",
+      "y",
+      "sleep 120",
+    ]
+  }
+  **/
 }
 
 resource "aws_eip" "ptfe" {
@@ -66,6 +88,13 @@ resource "aws_security_group" "ptfe_sg" {
   }
 
   ingress {
+    from_port   = 9870
+    to_port     = 9880
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
     from_port   = 8
     to_port     = 0
     protocol    = "icmp"
@@ -85,4 +114,8 @@ resource "aws_security_group" "ptfe_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+}
+
+output "tfe setpup address" {
+  value = "${aws_instance.ptfe.public_ip}"
 }
