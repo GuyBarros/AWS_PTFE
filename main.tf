@@ -29,21 +29,13 @@ resource "aws_instance" "ptfe" {
     agent       = false
   }
 
-  /**
   provisioner "remote-exec" {
     inline = [
-      "sudo pwd",
-      "sudo ls -lia",
-      "sleep 10",
-      "curl https://install.terraform.io/ptfe/stable | sudo bash",
-      "sleep 10",
-      "n",
-      "sleep 90",
-      "y",
-      "sleep 120",
+      "curl https://install.terraform.io/ptfe/stable > install_ptfe.sh",
+      "chmod 500 install_ptfe.sh",
+      "sudo ./install_ptfe.sh no-proxy bypass-storagedriver-warnings",
     ]
   }
-  **/
 }
 
 resource "aws_eip" "ptfe" {
@@ -116,6 +108,6 @@ resource "aws_security_group" "ptfe_sg" {
   }
 }
 
-output "tfe setpup address" {
-  value = "${aws_instance.ptfe.public_ip}"
+output "please open the following url in your browser to continue install" {
+  value = "http://${aws_instance.ptfe.public_dns}:8800"
 }
