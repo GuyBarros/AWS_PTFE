@@ -1,10 +1,10 @@
-variable access_key {
-  description = "please enter your AWS access key"
-}
+# variable access_key {
+#   description = "please enter your AWS access key"
+# }
 
-variable secret_key {
-  description = "please enter your AWS secret key"
-}
+# variable secret_key {
+#   description = "please enter your AWS secret key"
+# }
 
 variable "region" {
   description = "please enter the AWS region."
