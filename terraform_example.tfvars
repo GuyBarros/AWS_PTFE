@@ -1,7 +1,3 @@
-access_key = "ABCDEFG"
-
-secret_key = "HIJKLMNOP"
-
 region = "eu-west-2"
 
 tag_name = "My Demo PTFE Instance"
@@ -14,6 +10,6 @@ key_name = "Exanple SSH"
 
 public_key_path = "~/.ssh/id_rsa.pub"
 
-private_key_path = "~/.ssh/id_rsa"
+private_key_path = "~/.ssh/id_rsa.pem"
 
 volume_size = 120

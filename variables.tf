@@ -16,7 +16,7 @@ variable "ami" {
   description = "A map of AMIs"
 
   default = {
-    eu-west-2 = "ami-7c1bfd1b"
+    eu-west-2 = "ami-6b3fd60c"
   }
 }
 
@@ -56,4 +56,9 @@ variable "private_key_path" {
 variable "volume_size" {
   description = "the Value you want for your ec2 volume"
   default     = 100
+}
+
+variable "host_user" {
+  description = "the username you want to use for ssh"
+  default     = "ubuntu"
 }

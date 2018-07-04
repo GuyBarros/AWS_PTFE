@@ -18,13 +18,13 @@ resource "aws_instance" "ptfe" {
   ]
 
   tags {
-    Name  = "${var.tag_name}"
+    Name  = "PTFE"
     owner = "${var.tag_owner}"
     TTL   = "${var.tag_ttl}"
   }
 
   connection {
-    user        = "ec2-user"
+    user        = "${var.host_user}"
     private_key = "${file(var.private_key_path)}"
     agent       = false
   }
@@ -61,6 +61,13 @@ resource "aws_security_group" "ptfe_sg" {
   ingress {
     from_port   = 22
     to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 8200
+    to_port     = 8200
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
