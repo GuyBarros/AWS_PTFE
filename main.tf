@@ -5,7 +5,8 @@ provider "aws" {
 resource "aws_instance" "ptfe" {
   ami           = "${lookup(var.ami, var.region)}"
   instance_type = "${var.instance_type}"
-  key_name      = "${aws_key_pair.ptfe_key_pair.key_name}"
+  key_name      = "${var.key_name}"
+  user_data     = "${file("./init_install.sh")}"
 
   ebs_block_device {
     device_name = "/dev/sda1"
@@ -23,29 +24,29 @@ resource "aws_instance" "ptfe" {
     TTL   = "${var.tag_ttl}"
   }
 
-  connection {
-    user        = "${var.host_user}"
-    private_key = "${file(var.private_key_path)}"
-    agent       = false
-  }
+  # connection {
+  #   user        = "${var.host_user}"
+  #   private_key = "${var.private_key}"
+  #   agent       = false
+  # }
 
-  provisioner "remote-exec" {
-    inline = [
-      "curl https://install.terraform.io/ptfe/stable > install_ptfe.sh",
-      "chmod 500 install_ptfe.sh",
-      "sudo ./install_ptfe.sh no-proxy bypass-storagedriver-warnings",
-    ]
-  }
+  #provisioner "remote-exec" {
+  #  inline = [
+  #    "curl https://install.terraform.io/ptfe/stable > install_ptfe.sh",
+  #    "chmod 500 install_ptfe.sh",
+  #    "sudo ./install_ptfe.sh no-proxy bypass-storagedriver-warnings",
+  #  ]
+  #}
 }
 
 resource "aws_eip" "ptfe" {
   instance = "${aws_instance.ptfe.id}"
 }
 
-resource "aws_key_pair" "ptfe_key_pair" {
-  key_name   = "${var.key_name}"
-  public_key = "${file(var.public_key_path)}"
-}
+# resource "aws_key_pair" "ptfe_key_pair" {
+#   key_name   = "${var.key_name}"
+#   public_key = "${var.public_key}"
+# }
 
 resource "aws_security_group" "ptfe_sg" {
   name        = "ptfe_inbound"
