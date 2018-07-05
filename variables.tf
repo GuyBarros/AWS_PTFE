@@ -45,13 +45,15 @@ variable "key_name" {
   default     = "ptfe default ssh key"
 }
 
-variable "public_key_path" {
+/**
+ variable "public_key_path" {
   description = "please enter your public ssh key path"
 }
 
 variable "private_key_path" {
   description = "please enter your private ssh key path"
 }
+**/
 
 variable "volume_size" {
   description = "the Value you want for your ec2 volume"
