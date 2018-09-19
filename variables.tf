@@ -22,7 +22,7 @@ variable "ami" {
 
 variable "instance_type" {
   description = "The instance type to launch."
-  default     = "t2.xlarge"
+  default     = "m4.xlarge"
 }
 
 variable "tag_name" {
