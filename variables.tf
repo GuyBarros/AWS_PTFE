@@ -54,7 +54,10 @@ variable "private_key_path" {
   description = "please enter your private ssh key path"
 }
 **/
-
+variable "secretmessage" {
+  description = "this is a secret message defined in your tfvars
+}
+  
 variable "volume_size" {
   description = "the Value you want for your ec2 volume"
   default     = 100
