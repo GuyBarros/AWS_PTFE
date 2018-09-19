@@ -55,7 +55,7 @@ variable "private_key_path" {
 }
 **/
 variable "secretmessage" {
-  description = "this is a secret message defined in your tfvars
+  description = "this is a secret message defined in your tfvars"
 }
   
 variable "volume_size" {
