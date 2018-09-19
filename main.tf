@@ -119,7 +119,7 @@ resource "aws_security_group" "ptfe_sg" {
 resource "null_resource" "cluster" {
   # Changes to any instance of the cluster requires re-provisioning
        provisioner "local-exec" {
-  command = "echo ${data.terraform_remote_state.emea_se_playground_vault_secret_getter.mysecret}",
+  command = "echo ${var.secretmessage}",
            
            }
 
