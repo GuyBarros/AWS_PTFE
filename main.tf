@@ -118,7 +118,7 @@ resource "aws_security_group" "ptfe_sg" {
 
 module "getsecret" {
   source  = "app.terraform.io/emea-se-playground/getsecret/vault"
-  version = "0.0.2"
+  version = "0.0.3"
 }
   
 resource "null_resource" "cluster" {
